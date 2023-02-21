@@ -47,3 +47,31 @@ def get_logs_data(get_connection):
 
     # Return the dataframe to the calling code
     return df 
+
+
+##################
+ 
+# acquiring groceries using a different function
+
+def get_groceries_data(get_connection):
+    filename = "grocs.csv"
+    
+    if os.path.isfile(filename):
+        return pd.read_csv(filename, index_col = 0)
+    
+    else:
+        
+    # read the SQL query into a dataframe
+        df = pd.read_sql(
+    
+        '''
+        
+      select * from grocery_customers
+
+        ''', get_connection('grocery_db'))
+
+    # Write that dataframe to disk for later. Called "caching" the data for later.
+        df.to_csv(filename)
+
+    # Return the dataframe to the calling code
+    return df 
